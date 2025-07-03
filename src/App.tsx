@@ -1,12 +1,14 @@
 import type { Component } from "solid-js";
 import LandingPage from "./components/LandingPage";
-import Bubbles from "./components/Bubbles";
-import WarpSpeed from "./components/WarpSpeed";
+import Starfield from "./components/Starfield";
 
 const App: Component = () => {
   return (
-    <div class="dark:bg-gray-900 dark:text-white min-h-screen flex items-center justify-center">
-      <LandingPage></LandingPage>
+    <div>
+      <div class="relative dark:text-white min-h-screen flex items-center justify-center z-10 bg-slate-950">
+        <LandingPage></LandingPage>
+      </div>
+      {/* <Starfield /> */}
     </div>
   );
 };
