@@ -1,0 +1,62 @@
+# .github/workflows/deploy.yml
+name: Build & Deploy to S3 + CloudFront
+
+on:
+  push:
+    branches: [main] # change if you deploy from a different branch
+
+permissions:
+  id-token: write # <- required for OIDC
+  contents: read # checkout needs this
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1 · Check out the commit
+      - uses: actions/checkout@v4
+
+      # 2 · Set up Node + pnpm (with cache)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20 # match your local version
+          cache: pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: true # runs pnpm install --frozen-lockfile
+
+      # 3 · Build the site
+      - name: Build
+        run: pnpm run build # Vite outputs to ./dist by default
+
+      # 4 · Obtain short-lived AWS creds via OIDC
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::125455294948:role/GithubDeploy # <-- your role ARN
+          aws-region: us-west-2 # <-- bucket’s region
+          role-session-name: gha-${{ github.run_id }}
+
+      # 5 · Upload versioned assets with a 1-year cache
+      - name: Sync assets (long TTL)
+        run: |
+          aws s3 sync dist/ s3://darenkeck.com \
+            --exclude "*.html" \
+            --cache-control "public,max-age=31536000,immutable" \
+            --delete
+
+      # 6 · Upload HTML with zero cache so it picks up new hashes
+      - name: Sync HTML (no-cache)
+        run: |
+          aws s3 sync dist/ s3://darenkeck.com \
+            --exclude "*" --include "*.html" \
+            --cache-control "public,max-age=0,s-maxage=0,must-revalidate"
+
+      # 7 · Invalidate CloudFront so users get the fresh HTML right away
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E3KW9HSSCYCTCX \
+            --paths "/*"
