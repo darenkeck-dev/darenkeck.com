@@ -46,7 +46,7 @@ const LandingPage: Component = () => {
           >
             HERE
           </a>{" "}
-          or pre-save Moonlit Home at your favorite format{" "}
+          or listen to Moonlit Home in your favorite format{" "}
           <a class="text-yellow-400" href="https://too.fm/ygvm4pn">
             HERE
           </a>
