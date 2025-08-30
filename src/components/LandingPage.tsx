@@ -43,16 +43,16 @@ const LandingPage: Component = () => {
             >
               Shadow Dance
             </a>{" "}
-            is available now! This is a collaboration with the talented{" "}
+            with the talented{" "}
             <a class="text-yellow-400" href="https://billydenk.com">
               Billy Denk
-            </a>
-            . Check it out at{" "}
+            </a>{" "}
+            is out now! Listen on{" "}
             <a
               class="text-yellow-400"
               href="https://wayfarermusicgroup.bandcamp.com/track/shadow-dance"
             >
-              bandcamp
+              Bandcamp
             </a>{" "}
             or your favorite streaming platform.
           </p>
