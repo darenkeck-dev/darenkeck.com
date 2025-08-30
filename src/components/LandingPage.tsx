@@ -36,21 +36,26 @@ const LandingPage: Component = () => {
         <p>I'll occasionally link up fun projects here as well.</p>
         <AlertBox>
           <p class="text-middle py-2">
-            <span class="font-semibold">Moonlit Home</span> is out!
+            My collaboration{" "}
+            <a
+              class="font-semibold text-yellow-400"
+              href="https://wayfarermusicgroup.com/dir/shadow-dance-is-now-available/"
+            >
+              Shadow Dance
+            </a>{" "}
+            is available now! This is a collaboration with the talented{" "}
+            <a class="text-yellow-400" href="https://billydenk.com">
+              Billy Denk
+            </a>
+            . Check it out at{" "}
+            <a
+              class="text-yellow-400"
+              href="https://wayfarermusicgroup.bandcamp.com/track/shadow-dance"
+            >
+              bandcamp
+            </a>{" "}
+            or your favorite streaming platform.
           </p>
-          This is an ambient album with tracks written over the last year and a
-          half. Support the Wayfarer Music Group directly by purchasing{" "}
-          <a
-            class="text-yellow-400"
-            href="https://wayfarermusicgroup.bandcamp.com/album/moonlit-home"
-          >
-            HERE
-          </a>{" "}
-          or listen to Moonlit Home in your favorite format{" "}
-          <a class="text-yellow-400" href="https://too.fm/ygvm4pn">
-            HERE
-          </a>
-          .
         </AlertBox>
         <div>
           {urls.map((url) => (
